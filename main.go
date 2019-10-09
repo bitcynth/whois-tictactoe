@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net"
 	"strconv"
@@ -109,6 +110,9 @@ func handleConn(c net.Conn) {
 }
 
 func main() {
+	listenAddr := flag.String("listen", ":8043", "the address to listen on")
+	flag.Parse()
+
 	wmsg = ""
 	board = make(map[int]map[int]string)
 	for x := range []int{0, 1, 2} {
@@ -117,7 +121,7 @@ func main() {
 			board[x][y] = " "
 		}
 	}
-	l, err := net.Listen("tcp4", ":8043")
+	l, err := net.Listen("tcp4", *listenAddr)
 	if err != nil {
 		fmt.Println(err)
 		return
