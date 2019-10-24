@@ -62,6 +62,13 @@ func handleConn(c net.Conn) {
 	if inp == "blink\r\n" {
 		res := "\033[5m\033[93mBlinky!\033[0m"
 		c.Write([]byte(res))
+		c.Close()
+		return
+	} else if inp == "uwu\r\n" {
+		res := "\007\007"
+		c.Write([]byte(res))
+		c.Close()
+		return
 	}
 
 	cmd := strings.ReplaceAll(inp, "\r\n", "")
